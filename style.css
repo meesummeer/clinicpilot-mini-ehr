@@ -1,74 +1,93 @@
 body {
-    background: #f8fafd;
-    color: #222;
+    background: #eaf4fb;
+    color: #1c2c36;
     font-family: 'Segoe UI', Arial, sans-serif;
     margin: 0;
     padding: 0;
 }
 header {
-    background: #194972;
+    background: linear-gradient(90deg, #194972 0%, #2279be 100%);
     color: #fff;
-    padding: 15px 0;
+    padding: 17px 0 15px 0;
     display: flex;
     align-items: center;
     justify-content: center;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 12px #b5c9dd44;
 }
 #branding h2 {
     margin: 0;
     display: inline;
+    font-weight: 700;
+    letter-spacing: 1px;
 }
 .subtitle {
-    margin-left: 10px;
+    margin-left: 12px;
     color: #c6e0f5;
     font-weight: 400;
+    font-size: 18px;
 }
 main {
-    max-width: 900px;
+    max-width: 990px;
     margin: 30px auto 0 auto;
     background: #fff;
     border-radius: 10px;
-    box-shadow: 0 6px 24px #e1e4ea8c;
-    padding: 30px 40px 40px 40px;
+    box-shadow: 0 6px 32px #d2e2f633;
+    padding: 34px 46px 40px 46px;
+}
+h1 {
+    text-align: center;
+    color: #194972;
+    margin-top: 0;
+    margin-bottom: 20px;
 }
 #controls {
-    margin-bottom: 20px;
+    margin-bottom: 24px;
     display: flex;
     gap: 1em;
     align-items: center;
 }
 #search {
-    padding: 7px 10px;
+    padding: 9px 13px;
     font-size: 16px;
-    border: 1px solid #b4c5d7;
+    border: 1.5px solid #b4c5d7;
     border-radius: 4px;
     flex: 1;
+    background: #f7fbff;
 }
 #downloadBtn {
-    padding: 8px 18px;
-    background: #194972;
+    padding: 9px 22px;
+    background: #29a3f3;
     color: #fff;
     border: none;
     border-radius: 5px;
     font-size: 15px;
+    font-weight: 600;
     cursor: pointer;
+    transition: background 0.2s;
+    box-shadow: 0 2px 8px #b5d8fc33;
 }
 #downloadBtn:hover {
-    background: #22609e;
+    background: #194972;
 }
 table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 10px;
     background: #fafcff;
+    box-shadow: 0 1px 6px #b7c7db22;
+    border-radius: 7px;
+    overflow: hidden;
 }
 th, td {
-    padding: 10px 8px;
+    padding: 12px 9px;
     text-align: left;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #e8ecf1;
 }
 th {
     background: #eaf4fb;
     font-weight: 700;
+    color: #22609e;
 }
 tr:hover {
     background: #f1f7fc;
@@ -76,14 +95,15 @@ tr:hover {
 footer {
     text-align: center;
     color: #aaa;
-    padding: 18px;
+    padding: 20px;
     font-size: 15px;
-    margin-top: 40px;
+    margin-top: 44px;
+    background: #f4f7fa;
 }
 #details-modal {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(33,48,66,0.13);
+    background: rgba(44,77,102,0.16);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -91,40 +111,61 @@ footer {
 }
 .modal-content {
     background: #fff;
-    padding: 32px 38px;
-    border-radius: 14px;
-    min-width: 320px;
-    min-height: 180px;
+    padding: 38px 42px 28px 42px;
+    border-radius: 17px;
+    min-width: 340px;
+    min-height: 220px;
     position: relative;
-    box-shadow: 0 6px 24px #e1e4ea8c;
+    box-shadow: 0 10px 32px #b2cdf544;
     text-align: left;
+    width: 500px;
+    max-width: 96vw;
 }
 #close-modal {
     position: absolute;
-    top: 12px; right: 15px;
+    top: 11px; right: 18px;
     font-size: 25px;
     color: #e06666;
     cursor: pointer;
+    font-weight: 700;
 }
-#ai-summary-btn {
-    background: #22609e;
-    color: #fff;
+#profile-tabs {
+    margin-bottom: 22px;
+    display: flex;
+    gap: 0.5em;
+}
+.tab {
+    background: #eaf4fb;
     border: none;
-    padding: 7px 15px;
-    border-radius: 4px;
-    margin: 12px 0;
+    border-radius: 5px 5px 0 0;
+    padding: 7px 16px;
+    font-size: 15px;
+    font-weight: 600;
     cursor: pointer;
+    color: #22609e;
+    transition: background 0.15s, color 0.2s;
 }
-#ai-summary-btn:hover {
-    background: #194972;
+.tab.active, .tab:hover {
+    background: #29a3f3;
+    color: #fff;
 }
-#summary-box {
-    background: #f5faff;
-    padding: 12px;
-    border-radius: 6px;
-    margin-top: 10px;
-    color: #222;
-    min-height: 38px;
+#profile-content {
+    font-size: 16px;
+    color: #213a4a;
+}
+.xray-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+.xray-img {
+    border: 2px solid #29a3f3;
+    border-radius: 7px;
+    width: 104px;
+    height: 104px;
+    object-fit: cover;
+    box-shadow: 0 2px 8px #d1eaff55;
+    background: #e8f3fc;
 }
 .hidden {
     display: none;
