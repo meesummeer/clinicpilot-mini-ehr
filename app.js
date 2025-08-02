@@ -1,3 +1,4 @@
+// Utility: CSV to array of objects
 function parseCSV(text) {
     const lines = text.trim().split('\n');
     const headers = lines[0].split(',');
@@ -11,6 +12,31 @@ function parseCSV(text) {
 
 let patients = [];
 let filteredPatients = [];
+let currentPatient = null;
+
+// Demo data
+const demoMeds = [
+    "Paracetamol", "Ibuprofen", "Aspirin", "Amoxicillin", "Metformin", "Lisinopril", "Antibiotics", "Antihistamine", "Vitamin D"
+];
+const demoNotes = [
+    "Patient responded well to treatment.",
+    "Monitor blood pressure for 2 weeks.",
+    "Recommended lifestyle changes discussed.",
+    "Follow-up scheduled for next month.",
+    "Patient is allergic to penicillin.",
+    "Stable with current meds, continue same dose."
+];
+const demoHistory = [
+    { diagnosis: "Flu", date: "2024-01-11" },
+    { diagnosis: "Dental Caries", date: "2024-04-03" },
+    { diagnosis: "Hypertension", date: "2024-02-27" },
+    { diagnosis: "Diabetes", date: "2024-03-14" }
+];
+const demoXrays = [
+    "https://images.unsplash.com/photo-1512069772995-ec65ed27b1d4?w=400&q=80",
+    "https://images.unsplash.com/photo-1464983953574-0892a716854b?w=400&q=80",
+    "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=400&q=80"
+];
 
 window.onload = function() {
     document.getElementById('details-modal').classList.add('hidden');
@@ -26,18 +52,23 @@ window.onload = function() {
     document.getElementById('search').addEventListener('input', filterTable);
     document.getElementById('downloadBtn').addEventListener('click', downloadCSV);
 
-    // Use event delegation for close button
+    // Modal close event
     document.body.addEventListener('click', function(event) {
-        // Close modal if clicking ×
+        const modal = document.getElementById('details-modal');
         if (event.target && event.target.id === 'close-modal') {
             closeModal();
         }
-        // Close modal if clicking outside modal-content
-        if (
-            !document.getElementById('details-modal').classList.contains('hidden') &&
-            event.target.id === 'details-modal'
-        ) {
+        if (!modal.classList.contains('hidden') && event.target.id === 'details-modal') {
             closeModal();
+        }
+    });
+
+    // Tabs event (delegation)
+    document.body.addEventListener('click', function(event) {
+        if (event.target && event.target.classList.contains('tab')) {
+            document.querySelectorAll('.tab').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            showTab(event.target.dataset.tab);
         }
     });
 };
@@ -56,18 +87,17 @@ function renderTable(data) {
                 <td>${p.gender}</td>
                 <td>${p.visit_date}</td>
                 <td>${p.diagnosis}</td>
-                <td><button class="details-btn" data-idx="${idx}" style="background:#194972;color:#fff;padding:4px 10px;border:none;border-radius:3px;cursor:pointer;">Details</button></td>
+                <td><button class="details-btn" data-idx="${idx}" style="background:#29a3f3;color:#fff;padding:4px 10px;border:none;border-radius:3px;cursor:pointer;">Profile</button></td>
             </tr>`;
         });
     }
     html += '</tbody></table>';
     document.getElementById('patient-list').innerHTML = html;
 
-    // Attach click event to all detail buttons (event delegation not needed here)
     document.querySelectorAll('.details-btn').forEach(btn => {
         btn.addEventListener('click', function() {
             const idx = this.getAttribute('data-idx');
-            showDetails(idx);
+            showProfile(idx);
         });
     });
 }
@@ -81,35 +111,60 @@ function filterTable() {
     renderTable(filteredPatients);
 }
 
-function showDetails(idx) {
-    const p = filteredPatients[idx];
-    let html = `<h2>${p.full_name} <span style="font-size:14px;color:#888;">(ID: ${p.patient_id})</span></h2>
+function showProfile(idx) {
+    currentPatient = filteredPatients[idx];
+    document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+    document.querySelector('.tab[data-tab="profile"]').classList.add('active');
+    showTab('profile');
+    document.getElementById('details-modal').classList.remove('hidden');
+}
+
+function showTab(tab) {
+    const p = currentPatient;
+    if (!p) return;
+    let html = '';
+    if (tab === 'profile') {
+        html = `<h2>${p.full_name} <span style="font-size:14px;color:#778;">(ID: ${p.patient_id})</span></h2>
         <div><b>Age:</b> ${p.age} &nbsp; <b>Gender:</b> ${p.gender}</div>
-        <div><b>Last Visit:</b> ${p.visit_date}</div>
+        <div><b>Allergies:</b> ${Math.random() > 0.7 ? "Penicillin" : "None reported"}</div>
+        <div style="margin:10px 0;"><b>Last Visit:</b> ${p.visit_date}</div>
         <div><b>Diagnosis:</b> ${p.diagnosis}</div>
         <div><b>Prescription:</b> ${p.prescription}</div>
         <div><b>Notes:</b> ${p.notes}</div>
-        <div style="margin-top:8px;font-size:13px;color:#789;"><b>Last Updated:</b> ${p.last_updated}</div>
-    `;
-    document.getElementById('patient-details').innerHTML = html;
-    document.getElementById('summary-box').innerHTML = "";
-    document.getElementById('ai-summary-btn').onclick = function() {
-        generateAISummary(p);
-    };
-    document.getElementById('details-modal').classList.remove('hidden');
+        <div style="margin-top:8px;font-size:13px;color:#789;"><b>Last Updated:</b> ${p.last_updated}</div>`;
+    }
+    if (tab === 'medications') {
+        let meds = [];
+        for (let i=0; i<3; i++) meds.push(demoMeds[Math.floor(Math.random()*demoMeds.length)]);
+        html = `<h3>Medications</h3><ul>${meds.map(m=>`<li>${m}</li>`).join('')}</ul>`;
+    }
+    if (tab === 'history') {
+        html = `<h3>Visit History</h3><ul>${
+            demoHistory
+                .sort(()=>Math.random()-0.5)
+                .slice(0,2+Math.floor(Math.random()*2))
+                .map(h=>`<li>${h.date} – <b>${h.diagnosis}</b></li>`).join('')
+        }</ul>`;
+    }
+    if (tab === 'notes') {
+        let n = [];
+        for (let i=0; i<2+Math.floor(Math.random()*2); i++) n.push(demoNotes[Math.floor(Math.random()*demoNotes.length)]);
+        html = `<h3>Doctor Notes</h3><ul>${n.map(note=>`<li>${note}</li>`).join('')}</ul>`;
+    }
+    if (tab === 'xrays') {
+        let xrays = [];
+        for (let i=0; i<2+Math.floor(Math.random()*2); i++) xrays.push(demoXrays[Math.floor(Math.random()*demoXrays.length)]);
+        html = `<h3>X-ray Images</h3>
+            <div class="xray-gallery">
+            ${xrays.map(url=>`<img class="xray-img" src="${url}" alt="X-ray">`).join('')}
+            </div>`;
+    }
+    document.getElementById('profile-content').innerHTML = html;
 }
 
 function closeModal() {
     document.getElementById('details-modal').classList.add('hidden');
-}
-
-function generateAISummary(p) {
-    document.getElementById('summary-box').innerHTML = 
-        `<i>Generating summary...</i>`;
-    setTimeout(() => {
-        const summary = `Patient ${p.full_name} (${p.age}, ${p.gender}) visited on ${p.visit_date} with diagnosis "${p.diagnosis}". Current prescription: ${p.prescription}. Notes: ${p.notes}`;
-        document.getElementById('summary-box').innerHTML = summary;
-    }, 800);
+    currentPatient = null;
 }
 
 function downloadCSV() {
