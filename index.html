@@ -18,15 +18,18 @@
             <input type="text" id="search" placeholder="Search patient by name or ID...">
             <button id="downloadBtn">Download Patient Data (CSV)</button>
         </section>
-        <section id="patient-list">
-            <!-- Patient table will be rendered here -->
-        </section>
+        <section id="patient-list"></section>
         <section id="details-modal" class="hidden">
             <div class="modal-content">
                 <span id="close-modal">&times;</span>
-                <div id="patient-details"></div>
-                <button id="ai-summary-btn">Generate Smart Summary (AI)</button>
-                <div id="summary-box"></div>
+                <div id="profile-tabs">
+                    <button data-tab="profile" class="tab active">Profile</button>
+                    <button data-tab="medications" class="tab">Medications</button>
+                    <button data-tab="history" class="tab">History</button>
+                    <button data-tab="notes" class="tab">Doctor Notes</button>
+                    <button data-tab="xrays" class="tab">X-rays</button>
+                </div>
+                <div id="profile-content"></div>
             </div>
         </section>
     </main>
