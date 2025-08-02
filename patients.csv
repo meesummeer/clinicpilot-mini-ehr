@@ -1,0 +1,21 @@
+patient_id,full_name,age,gender,visit_date,diagnosis,prescription,notes,last_updated
+1001,Ali Khan,50,Male,2025-02-06,Dental Caries,Antihistamine,Prescribed rest.,2025-02-06
+1002,Sara Ahmed,28,Male,2025-07-03,Hypertension,Paracetamol,Allergic to penicillin.,2025-07-09
+1003,Mohammad Raza,59,Female,2025-05-31,Migraine,Metformin,Needs lab test.,2025-06-09
+1004,Fatima Noor,33,Female,2025-05-26,Diabetes,Metformin,Follow up in 2 weeks.,2025-06-03
+1005,Usman Tariq,34,Female,2025-02-28,Migraine,Lisinopril,Needs lab test.,2025-03-10
+1006,Zainab Bilal,51,Male,2025-04-06,Dental Caries,Paracetamol,Stable condition.,2025-04-11
+1007,Omar Siddiqui,31,Male,2025-06-02,Allergy,Antihistamine,Stable condition.,2025-06-10
+1008,Ayesha Malik,18,Male,2025-04-14,Dental Caries,Antihistamine,Needs lab test.,2025-04-20
+1009,Imran Abbas,57,Male,2025-02-09,Dental Caries,Antibiotics,Follow up in 2 weeks.,2025-02-17
+1010,Madiha Syed,29,Female,2025-06-29,Migraine,Antihistamine,Allergic to penicillin.,2025-07-01
+1011,Kashif Hussain,35,Female,2025-08-01,Asthma,Lisinopril,Follow up in 2 weeks.,2025-08-08
+1012,Hira Shah,35,Male,2025-02-18,Diabetes,Lisinopril,Follow up in 2 weeks.,2025-02-20
+1013,Bilal Javed,26,Male,2025-05-09,Flu,Ibuprofen,Needs lab test.,2025-05-15
+1014,Mariam Qureshi,22,Male,2025-04-06,Hypertension,Rest & fluids,Allergic to penicillin.,2025-04-11
+1015,Farhan Aziz,39,Male,2025-04-13,Asthma,Ibuprofen,Allergic to penicillin.,2025-04-19
+1016,Sadia Irfan,46,Male,2025-03-02,Migraine,Antihistamine,Stable condition.,2025-03-10
+1017,Junaid Mir,18,Male,2025-07-25,Diabetes,Antihistamine,Follow up in 2 weeks.,2025-07-30
+1018,Nadia Rasool,32,Male,2025-04-07,Allergy,Rest & fluids,Prescribed rest.,2025-04-09
+1019,Saad Zafar,60,Female,2025-04-29,Allergy,Rest & fluids,Prescribed rest.,2025-04-29
+1020,Meher Gul,28,Female,2025-03-02,Flu,Paracetamol,Prescribed rest.,2025-03-03
