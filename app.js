@@ -16,6 +16,7 @@ let filteredPatients = [];
 
 // Fetch and display table on load
 window.onload = function() {
+    document.getElementById('details-modal').classList.add('hidden');
     fetch('patients.csv')
         .then(resp => resp.text())
         .then(data => {
