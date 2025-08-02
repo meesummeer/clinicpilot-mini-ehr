@@ -26,14 +26,19 @@ window.onload = function() {
     document.getElementById('search').addEventListener('input', filterTable);
     document.getElementById('downloadBtn').addEventListener('click', downloadCSV);
 
-    // Modal close events
-    document.addEventListener('click', function(event) {
-        const modal = document.getElementById('details-modal');
-        const closeBtn = document.getElementById('close-modal');
-        // Close if click on × button
-        if (event.target === closeBtn) closeModal();
-        // Close if click outside modal-content when modal is open
-        if (!modal.classList.contains('hidden') && event.target === modal) closeModal();
+    // Use event delegation for close button
+    document.body.addEventListener('click', function(event) {
+        // Close modal if clicking ×
+        if (event.target && event.target.id === 'close-modal') {
+            closeModal();
+        }
+        // Close modal if clicking outside modal-content
+        if (
+            !document.getElementById('details-modal').classList.contains('hidden') &&
+            event.target.id === 'details-modal'
+        ) {
+            closeModal();
+        }
     });
 };
 
@@ -51,12 +56,20 @@ function renderTable(data) {
                 <td>${p.gender}</td>
                 <td>${p.visit_date}</td>
                 <td>${p.diagnosis}</td>
-                <td><button onclick="showDetails(${idx})" style="background:#194972;color:#fff;padding:4px 10px;border:none;border-radius:3px;cursor:pointer;">Details</button></td>
+                <td><button class="details-btn" data-idx="${idx}" style="background:#194972;color:#fff;padding:4px 10px;border:none;border-radius:3px;cursor:pointer;">Details</button></td>
             </tr>`;
         });
     }
     html += '</tbody></table>';
     document.getElementById('patient-list').innerHTML = html;
+
+    // Attach click event to all detail buttons (event delegation not needed here)
+    document.querySelectorAll('.details-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const idx = this.getAttribute('data-idx');
+            showDetails(idx);
+        });
+    });
 }
 
 function filterTable() {
