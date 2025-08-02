@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ClinicPilot · Mini EHR System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div id="branding">
+            <!-- Optional: insert <img src="logo.png"> if you have a logo -->
+            <h2>ClinicPilot</h2>
+            <span class="subtitle">by CyberHealth Solutions</span>
+        </div>
+    </header>
+    <main>
+        <h1>Mini EHR Demo Dashboard</h1>
+        <section id="controls">
+            <input type="text" id="search" placeholder="Search patient by name or ID...">
+            <button id="downloadBtn">Download Patient Data (CSV)</button>
+        </section>
+        <section id="patient-list">
+            <!-- Patient table will be rendered here -->
+        </section>
+        <section id="details-modal" class="hidden">
+            <div class="modal-content">
+                <span id="close-modal">&times;</span>
+                <div id="patient-details"></div>
+                <button id="ai-summary-btn">Generate Smart Summary (AI)</button>
+                <div id="summary-box"></div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        Built by Meesum Mir &middot; CyberHealth Solutions
+    </footer>
+    <script src="app.js"></script>
+</body>
+</html>
