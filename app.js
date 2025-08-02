@@ -1,4 +1,3 @@
-// Utility: CSV to array of objects
 function parseCSV(text) {
     const lines = text.trim().split('\n');
     const headers = lines[0].split(',');
@@ -10,11 +9,9 @@ function parseCSV(text) {
     });
 }
 
-// Globals
 let patients = [];
 let filteredPatients = [];
 
-// Hide modal initially
 window.onload = function() {
     document.getElementById('details-modal').classList.add('hidden');
 
@@ -29,16 +26,18 @@ window.onload = function() {
     document.getElementById('search').addEventListener('input', filterTable);
     document.getElementById('downloadBtn').addEventListener('click', downloadCSV);
 
-    // Modal logic
-    document.getElementById('close-modal').onclick = closeModal;
-    window.onclick = function(event) {
-        let modal = document.getElementById('details-modal');
-        if (event.target == modal) closeModal();
-    };
+    // Modal close events
+    document.addEventListener('click', function(event) {
+        const modal = document.getElementById('details-modal');
+        const closeBtn = document.getElementById('close-modal');
+        // Close if click on × button
+        if (event.target === closeBtn) closeModal();
+        // Close if click outside modal-content when modal is open
+        if (!modal.classList.contains('hidden') && event.target === modal) closeModal();
+    });
 };
 
 function renderTable(data) {
-    // Always hide modal when table is re-rendered
     document.getElementById('details-modal').classList.add('hidden');
     let html = '<table><thead><tr><th>ID</th><th>Name</th><th>Age</th><th>Gender</th><th>Last Visit</th><th>Diagnosis</th><th></th></tr></thead><tbody>';
     if (data.length === 0) {
@@ -91,17 +90,15 @@ function closeModal() {
     document.getElementById('details-modal').classList.add('hidden');
 }
 
-// Simulate AI summary with a simple template (replace with real API later)
 function generateAISummary(p) {
     document.getElementById('summary-box').innerHTML = 
         `<i>Generating summary...</i>`;
     setTimeout(() => {
         const summary = `Patient ${p.full_name} (${p.age}, ${p.gender}) visited on ${p.visit_date} with diagnosis "${p.diagnosis}". Current prescription: ${p.prescription}. Notes: ${p.notes}`;
         document.getElementById('summary-box').innerHTML = summary;
-    }, 800); // Simulate AI delay
+    }, 800);
 }
 
-// CSV download of filtered table
 function downloadCSV() {
     let data = filteredPatients.length > 0 ? filteredPatients : patients;
     const header = Object.keys(data[0]);
